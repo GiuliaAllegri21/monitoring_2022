@@ -31,3 +31,6 @@ hist(giuliatable$fish)
 
 # water histogram
 hist(giuliatable$water)
+
+# R code for ecosystem monitoring by remote sensing 
+# First of all we need to install additional packages
