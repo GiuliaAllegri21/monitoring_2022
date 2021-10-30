@@ -13,3 +13,10 @@ install.packages("raster")
 # with the function library we can use packages
 
 library(raster)
+
+setwd("/Users/Zuli/Desktop")
+# we are going to importa data from satellite
+# objects cannot be numbers
+
+p224r63_2011 <- brick("p224r63_2011_masked.grd")
+
