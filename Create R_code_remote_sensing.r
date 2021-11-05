@@ -69,3 +69,4 @@ plotRGB(l2011, r=3, g=2, b=1, stretch="Lin")
 > plot(l2011$B2_sre, col=clg)
 > # two raws and one column 
 > 
+# for having the reverse colors in the image we juct can change the position of "col=clg and col=clb" 
