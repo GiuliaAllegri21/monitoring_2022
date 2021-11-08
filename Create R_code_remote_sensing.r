@@ -24,10 +24,15 @@ p224r63_2011 <- brick("p224r63_2011_masked.grd")
 p224r63_2011
 plot(p224r63_2011)
 
+# to recall our satellite file in R 
+l2011<- brick("p224r63_2011.grd")
 
 # B1 is the reflectance in the blue band 
 # B2 is the reflectance in the green band 
 # B3 is the reflectance in the red band 
+
+# $ is used for linking our model to a specific data inside that data folder
+
 
 # We can change the color palette
 # https://www.rdocumentation.org/packages/dichromat/versions/1.1/topics/colorRampPalette
@@ -60,6 +65,8 @@ plotRGB(l2011, r=3, g=2, b=1, stretch="Lin")
 > # two raws one column =  just one multiframe graph.
 > 
 > par(mfrow=c(1,2))
+# mfrow = multiframe raw
+
 > plot(l2011$B1_sre, col=clb)
 > plot(l2011$B2_sre, col=clg)
 > # one raw and two column
@@ -70,3 +77,23 @@ plotRGB(l2011, r=3, g=2, b=1, stretch="Lin")
 > # two raws and one column 
 > 
 # for having the reverse colors in the image we juct can change the position of "col=clg and col=clb" 
+
+# everytime we use raster we have to recall it in R system
+# always open the users and lab folder in R 
+
+
+# plot the first 4 bands with two raws and 2 columns
+# we need 2 raws and 2 columns 
+par(mfrow=c(2,2))
+clb <- colorRampPalette(c('dark blue','blue','light blue'))(100)  
+plot(p224r63_2011$B1_sre, col=clb)
+
+clg <- colorRampPalette(c('dark green','green','light green'))(100) # 
+plot(p224r63_2011$B2_sre, col=clg)
+
+clr <- colorRampPalette(c('dark red','red','pink'))(100)  
+plot(p224r63_2011$B3_sre, col=clr)
+# searching the color's namein R with the help of Google "deeppink1" and so on is the right name for pink. 
+clp <- colorRampPalette(c("deeppink1","deeppink2","deeppink3"))(100)
+plot(p224r63_2011$B4_sre, col=clp)
+
