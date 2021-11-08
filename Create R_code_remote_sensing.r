@@ -97,3 +97,31 @@ plot(p224r63_2011$B3_sre, col=clr)
 clp <- colorRampPalette(c("deeppink1","deeppink2","deeppink3"))(100)
 plot(p224r63_2011$B4_sre, col=clp)
 
+# we want to see the band and raws as human see. With natural colors 
+# first we have to clean the window with 
+dev.off() # --> it closes the device
+
+# first the satelite brick and the layers 
+# recognizing which color is where in the folder data + using stretch= "Lin"-> Natural colors 
+plotRGB(l2011, r=3, g=2, b=1, stretch="Lin") 
+
+# lets move the infrared visual just shifting the numbers in the function -> FALSE colors
+
+plotRGB(l2011, r=4, g=3, b=2, stretch="Lin")
+
+# lets chenge the channel of near infrared in the green band instead on the red -> super green color
+
+plotRGB(l2011, r=3, g=4, b=2, stretch="Lin")
+
+# near infrared in the Blue component -> Yello Ground color-> where we have tdestroied the forest. No tree coverage 
+plotRGB(l2011, r=3, g=2, b=4, stretch="Lin")
+
+#lets make  multiframe of these coverage 
+par(mfrow=c(2,2))
+plotRGB(l2011, r=3, g=2, b=1, stretch="Lin") 
+plotRGB(l2011, r=4, g=3, b=2, stretch="Lin")
+plotRGB(l2011, r=3, g=4, b=2, stretch="Lin")
+plotRGB(l2011, r=3, g=2, b=4, stretch="Lin")
+
+# these is called ... amalysis and we can see than with other data the changes in term of ground coverage, water, and ground presence.
+# the next lesson we will observe the changing during these 30 years with the file p224r63_1988.gri
