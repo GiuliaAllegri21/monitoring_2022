@@ -101,7 +101,7 @@ plot(p224r63_2011$B4_sre, col=clp)
 # first we have to clean the window with 
 dev.off() # --> it closes the device
 
-# first the satelite brick and the layers 
+# first the satelite brick and the layers with infrared light. 
 # recognizing which color is where in the folder data + using stretch= "Lin"-> Natural colors 
 plotRGB(l2011, r=3, g=2, b=1, stretch="Lin") 
 
