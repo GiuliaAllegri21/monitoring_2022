@@ -125,3 +125,31 @@ plotRGB(l2011, r=3, g=2, b=4, stretch="Lin")
 
 # these is called ... amalysis and we can see than with other data the changes in term of ground coverage, water, and ground presence.
 # the next lesson we will observe the changing during these 30 years with the file p224r63_1988.gri
+
+
+# seeing how a landscape changes through time.
+# final day on this tropical forest reserve
+# brick function for import the file
+
+library(raster)
+ setwd(/Users/Zuli/Desktop/lab/)
+l2011 <- brick("p224r63_2011.grd")
+l2011
+
+# now we plot in red green blue color 
+plotRGB(l2011, r=4, g=3, b=2, stretch="Lin")
+# now we create an histogramm function always with RGB function 
+plotRGB(l2011, r=4, g=3, b=2, stretch="Hist")
+
+# now we observe how the forest was in 1988 and we should see the differences.
+# import past data 
+l1988<- brick("p224r63_1988.grd")
+l1988
+# we recieve the brick function with all the values and data, 7 bands of landcsapes (30x30m) 
+# 2 images in 1 row
+par(mfrow=c(2,1))
+plotRGB(l2011, r=4, g=3, b=2, stretch="Lin")
+plotRGB(l1988, r=4, g=3, b=2, stretch="Lin")
+
+# put the NIR in the blue channel 
+plotRGB(l1988, r=2, g=3, b=4, stretch="Lin")
