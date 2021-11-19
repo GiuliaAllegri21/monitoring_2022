@@ -153,3 +153,36 @@ plotRGB(l1988, r=4, g=3, b=2, stretch="Lin")
 
 # put the NIR in the blue channel 
 plotRGB(l1988, r=2, g=3, b=4, stretch="Lin")
+
+
+# installing library(rgdal) and downloadig images from virtuale folder 
+# always recall the library(raster)
+library(rgdal)
+#setwd("/Users/Zuli/Desktop/lab/") for opening the connectiond in the computer directory 
+setwd("/Users/Zuli/Desktop/lab/")
+
+# brick function of l1992 image 
+l1992<-brick("defor1_.jpg")
+l1992
+
+# having the tbale with all the carachteristics of the images and the file
+#names      : defor1_.1, defor1_.2, defor1_.3 
+# plot the image of the colors of our .jpg images
+plotRGB(l1992, r=1, g=2, b=3, stretch="Lin")
+# image will created and modify -> we have the near infrared in the near component. we should recognize which are the bands. 
+
+# defor1_.1=NIR  (near infrared is the 1 jp)
+# defor1_.2 = red
+# defor1_.3= green
+# putting the first band in green
+plotRGB(l1992, r=2, g=1, b=3, stretch="Lin")
+
+# first band in blue 
+plotRGB(l1992, r=2, g=3, b=1, stretch="Lin") 
+# so there is no beare soil, we can see also river 
+# the river is not "black coloured" because there is some coverage given from soil or algae or plants. -> eutrophization in 1992
+
+# in monday we will upload the image from 2006 and will calculate the NPP (Net primary production)
+
+
+
