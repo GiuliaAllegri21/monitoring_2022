@@ -184,5 +184,91 @@ plotRGB(l1992, r=2, g=3, b=1, stretch="Lin")
 
 # in monday we will upload the image from 2006 and will calculate the NPP (Net primary production)
 
+# recall the libraries
+library(raster)
+library(rgdal)
+setwd("/Users/Zuli/Desktop/lab/")
+l1992 <- brick("defor1_.jpg")
+l1992
+# we have again all the data
 
+plotRGB(l1992, r=1, g=2, b=3, stretch="Lin")
 
+# import the image defor_2.jpg
+l2006<- brick("defor2_.jpg")
+l2006 # this used for calling in R our image previously saved in the lab folder 
+# plotting the image with the color wavelenght which we are interested in. 
+
+plotRGB(l2006, r=1, g=2, b=3, stretch="Lin")
+
+# let's plot together 2 images with para function of frow
+par(mfrow=c(1,2))
+plotRGB(l1992, r=1, g=2, b=3, stretch="Lin")
+plotRGB(l2006, r=1, g=2, b=3, stretch="Lin")
+
+#lets plot the same but in a columnar view 
+> par(mfrow=c(2,1))
+> plotRGB(l1992, r=1, g=2, b=3, stretch="Lin")
+> plotRGB(l2006, r=1, g=2, b=3, stretch="Lin")
+
+# now we have to calculate the energy amount of the landpatch
+
+# we use the NIR - the reflactant of the plant 
+# high reflectance in NIR and low in Red.--> if vegetation will be cut, low reflectance in NIR and higher in Red 
+# in tropical forest we have high NIR and low Red (cuz there is a lot of vegetation)
+# example NIR - RED = DVI (100-20=80)
+dvi1992 <- NIR-RED 
+# let's calculate energy in 1992 with the names of layers with $ symbol, which is been used to connect the data. 
+# and than we change colors with the colorRampPalette function
+# before plotting we have to close the previously functions and datasets 
+
+dev.off
+dvil1992 <- l1992$defor1_.1 - l1992$defor1_.2
+cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100)
+plot(dvil1992, col=cl)
+
+# calculate energy in 2006 without deleting the previous functions
+
+dvil2006 <- l2006$defor2_.1 - l2006$defor2_.2
+cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100)
+plot(dvil2006, col=cl)
+
+# let's organise te calculation of the 2 years!
+
+# we are going to make the differences between one time to the other 
+
+dvidif <- dvil1992 - dvil2006 
+# plot the results 
+cld <- colorRampPalette(c('blue','yellow','white','red'))(100)
+plot(dvidif, col=cld)
+
+# final plot of energy loss of all images: original images, dvis, final dvi differences 
+# we use the para function (paragone), with 3 rows and 2 columns
+
+par(mfrow=c(3,2))
+plotRGB(l1992, r=1, g=2, b=3, stretch="Lin")
+plotRGB(l2006, r=1, g=2, b=3, stretch="Lin")
+plot(dvil1992, col=cl)
+plot(dvil2006, col=cl)
+plot(dvidif, col=cld)
+
+# let's make a pdf of it 
+pdf("energy.pdf")
+par(mfrow=c(3,2))
+plotRGB(l1992, r=1, g=2, b=3, stretch="Lin")
+plotRGB(l2006, r=1, g=2, b=3, stretch="Lin")
+plot(dvil1992, col=cl)
+plot(dvil2006, col=cl)
+plot(dvidif, col=cld)
+dev.off
+
+# other one with 1 row and 3 columns
+
+pdf("dvi.pdf")
+par(mfrow=c(1,3))
+plotRGB(l1992, r=1, g=2, b=3, stretch="Lin")
+plotRGB(l2006, r=1, g=2, b=3, stretch="Lin")
+plot(dvil1992, col=cl)
+plot(dvil2006, col=cl)
+plot(dvidif, col=cld)
+dev.off
