@@ -86,3 +86,43 @@ plotRGB(EN, r=1, g=7, b=13, stretch="lin")
 # green part = higher value of NO2 in the middle of the lockdown
 # blue part = higher value of NO2 in March
 # the yellow part is the area that mantain the emission of NO2 costant like the Pianura Padana
+
+#### day 2 ####
+# importing all images in R with raster function and than we will create a stack from scratches 
+
+# "lapply" function? is applying the function over a list or a vector --> now we apply the same function directly to all the set 
+
+#  list for explaying to the sofware which files are going to be imported and than recall the "rlist"
+rlist<- list.files(pattern="EN")
+rlist 
+
+# apply function to our list 
+lapply(rlist,raster)
+list_rast <- lapply(rlist, raster)
+list_rast
+
+# "stack" function for list of the files
+
+EN_stack <- stack (list_rast)
+EN_stack
+
+# calling colorRampPalette function
+cl <- colorRampPalette(c('red','orange','yellow'))(100)
+plot(EN_stack, col=cl)
+
+# Exercise plot only the first image of the stack
+
+plot(EN_stack$EN_0001, col=cl)
+
+# differences between the first image and the 13th image changing the colorRampPalette
+
+ENdif <- EN_stack$EN_0001 - EN_stack$EN_0013
+cldif <- colorRampPalette(c('blue','white','red'))(100) 
+plot(ENdif, col=cldif)
+
+# how to recall a code from another person without copy paste it. 
+
+# Source: automated processing function 
+# save a code in a file in the EN folder .r or .txt as extension
+
+source("R_code_automatic_script.r")
