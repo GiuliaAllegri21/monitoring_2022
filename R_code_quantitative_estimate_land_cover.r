@@ -139,3 +139,57 @@ p1 <- ggplot(proportion, aes(x=cover, y=prop1992, color=cover)) + geom_bar(stat=
 ####arrangeGrob(p1, p2, nrows=1)???
 
 SOLUZIONE! = grid.arrange(p1, p2, nrow=1) #
+
+##### 13.12.2021 #####
+# plotting all together 
+p1 <- ggplot(proportion, aes(x=cover, y=prop1992, color=cover)) + geom_bar(stat="identity", fill="white") + ylim(0,1)
+
+p2 <- ggplot(proportion, aes(x=cover, y=prop2006, color=cover)) + geom_bar(stat="identity", fill="white") + ylim(0,1)
+
+grid.arrange(p1, p2, nrow=1)
+# intalling library(patchwork)
+
+library(patchwork)
+p1 + p2
+
+# patchwork is even working with the raster library 
+# instead of using plotRGB we are going to use ggRGB
+ggRGB(l1992, r=1, g=2, b=3)
+
+# lets see the stretch=lin of the data
+ggRGB(l1992, r=1, g=2, b=3, stretch="lin")
+# now with the hist function
+ggRGB(l1992, r=1, g=2, b=3, stretch="hist")
+# lets make the same with the square_root function
+ggRGB(l1992, r=1, g=2, b=3, stretch="sqrt")
+
+# now stretching the data with "logarithm"
+ggRGB(l1992, r=1, g=2, b=3, stretch="log")
+
+# assign every graph to an object in patchwork 
+ggRGB(l1992, r=1, g=2, b=3)
+gp1 <- ggRGB(l1992, r=1, g=2, b=3, stretch="lin")
+gp2 <- ggRGB(l1992, r=1, g=2, b=3, stretch="hist")
+gp3 <- ggRGB(l1992, r=1, g=2, b=3, stretch="sqrt")
+gp4 <- ggRGB(l1992, r=1, g=2, b=3, stretch="log")
+# every plot in just one line
+gp1 + gp2 + gp3 + gp4 
+
+# lets do the same for the l2006 data 
+
+ggRGB(l2006, r=1, g=2, b=3)
+gp1 <- ggRGB(l2006, r=1, g=2, b=3, stretch="lin")
+gp2 <- ggRGB(l2006, r=1, g=2, b=3, stretch="hist")
+gp3 <- ggRGB(l2006, r=1, g=2, b=3, stretch="sqrt")
+gp4 <- ggRGB(l2006, r=1, g=2, b=3, stretch="log")
+
+# multitemporal patchwork
+
+gp1 <- ggRGB(l1992, r=1, g=2, b=3)
+
+gp5 <- ggRGB(l2006, r=1, g=2, b=3) gp1 + gp5
+
+gp1 / gp5
+# the sign / is important to show the graphs one over the other !
+
+
