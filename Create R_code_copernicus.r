@@ -15,3 +15,16 @@
  
  # 15 dec #
  
+# changing colors of our image (snow20211214)
+cl<- colorRampPalette(c("darkblue", "blue", "red"))(100)
+plot(snow20211214, col=cl)
+####
+# the fill is the name of the plot "name"-> inside the object ,function for using "viridis" packages for colorblind people is "scale_fill_viridis"
+#ggplot function 
+
+ggplot()+
+geoom_raster(snow20211214, mapping= aes(x=x, y=y, fill= Snow.Cover.Extent)) 
+
+#ggplot() with viridis
+ggplot()+
+geoom_raster(snow20211214, mapping= aes(x=x, y=y, fill= Snow.Cover.Extent)) 
