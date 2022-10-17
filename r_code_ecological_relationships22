@@ -1,0 +1,74 @@
+install.packages("sp")
+# used for recalling dataset, is a library of datasets
+data(meuse)
+# meuse is used for recalling the datasets 
+head(meuse) # possible to take a look in meuse --> relationships between variables
+summary(meuse) 
+# summary gives me the possibility to analyze our data, min max, quantile etc...
+# changing color using col=""
+plot(cadmium, zinc, col="red")
+# to get bigger size of dots in the graph using the function cex=""
+plot(cadmium, zinc, col="red", cex="2") --> doubled size
+pairs(meuse) --> used for having all the plots of data in one image
+# changing colors of pairs
+pairs(meuse, col="blue")
+
+Plotting only few variables:
+
+# cadmium copwe lead zinc
+# pairs with soil variables
+# from column 3 to column 6 
+
+3:6 
+pairs(meuse[, 3:6]) --> to select only the columns of interest
+# in the coding language the "starting point" is always a comma ","
+just to see the data of columns --> 
+meuse[, 3:6]
+
+to renaming selceted columns/datasets 
+in this case : "POL"
+pol <- meuse[,3:6]
+pol 
+# to show only some raws of our data and columns 
+head(pol)
+# it shows only few lines
+
+# to make paris only of few data related to pollution (cadmium, lead, zinc)
+pairs(pol, col="blue", cex=1.5)
+
+# if we want to pair some data random and not a dataset 
+cadmium + copper + lead + zinc, data=meuse
+# using "thilde" for grouping things together is EQUAL (not =) but is written like thilde and in yellow color
+# mac users alt+5
+
+pairs(~cadmium + copper + lead + zinc, data=meuse, col="yellow")
+
+pairs(~cadmium + copper + lead + zinc, data=meuse, col="magenta", cex=3) --> for changing the size of dots
+
+# we want to have the coordinates of our dataset
+using library(sp) we are able to have some coordinates
+data(meuse)
+head(meuse)
+pol(meuse)
+
+# using function "coordinates"
+coordinates(meuse)= ~x+y 
+# using tilde for starting from some point 
+
+# now plotting every varuable in space, first to write always the dataset 
+# "main" means the Title of the Plot 
+
+ssplot(meuse, "zinc", main="Concentration of zinc")
+
+# relationship between several variables --> this is called an array!
+# c used for creating an array and having many plots
+
+spplot(meuse, c("zinc", "copper"))
+spplot(meuse, c("zinc", "copper","lead"))
+
+# and the graph will show different plots in the same image
+# rather than using colours, let's make us of bubbles -> the bubble increase according the the increase of data and concentration
+
+bubble(meuse, "zinc")
+bubble(meuse, "zinc", col="blue")
+
