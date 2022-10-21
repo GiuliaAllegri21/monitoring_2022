@@ -22,3 +22,5 @@ summary(covid) --> information about our data in a statistical term
 ggplot(covid, aes(x= lon, y=lat)) + geom_point(col="red")
 ggplot(covid, aes(x= lon, y=lat, size= cases)) + geom_point(col="red")
 
+#ERRORE
+Errore in FUN(X[[i]], ...) : oggetto 'lon' non trovato
