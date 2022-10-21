@@ -72,3 +72,11 @@ spplot(meuse, c("zinc", "copper","lead"))
 bubble(meuse, "zinc")
 bubble(meuse, "zinc", col="blue")
 
+
+
+
+
+
+
+
+
