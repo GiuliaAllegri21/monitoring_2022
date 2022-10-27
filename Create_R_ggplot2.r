@@ -26,3 +26,9 @@ ggplot(covid, aes(x= lon, y=lat, size= cases)) + geom_point(col="red")
 Errore in FUN(X[[i]], ...) : oggetto 'lon' non trovato
 # risolto --> 
 error was made by not naming again our dataframe also with header=T
+# risolto mettendo covid<- read.table(covid_agg.csv, header=T) 
+and call than "covid"
+
+install.packages("statstat")
+library(spatstat)
+
