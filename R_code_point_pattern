@@ -1,0 +1,49 @@
+POINT PATTERN LESSON 27.10
+# important for seing the density of a population, point pattern for population ecology
+
+# recall the table of previous lesson -> covid_agg.csv
+
+covid
+setwd("/Users/Zuli/Desktop/lab22")
+
+read.table # to read the table 
+read.tabel(covid_add.csv)
+# assigning a name to our dataframes
+
+covid <- ("covid_agg.csv", header=T)
+
+#recall the library(spatstat)
+
+library(spatstat)
+# interpolation --> to create a pattern of our points in a plot
+
+to go from points to a map with planar point pannel (ppp)
+
+# we use the C to create an array, for measurments to be expressed all together 
+
+attach(covid) or using $ to the data in the function 
+covid_planar<- ppp(x=covid$lon, y=covid$lat,c(-180,180), c(-90, 90)) --> without attaching(covid)
+
+covid_planar<- ppp(x=lon, y=lat,c(-180,180), c(-90, 90))
+plot(covid_planar)
+
+# we map now the density 
+density_map <- density(covid_planar)
+
+# we can plot directly
+the density map 
+
+plot(density_map)
+# we want to add the POINTs
+points(density_map)
+changing type of shapes used with pch= and the nr of the form
+
+points(covid_planar, pch=19)
+
+# changing color 
+
+cl <- colorRampPalette(c(col="cyan", "coral", "chartreuse"), (100)
+plot(density_map)
+points(covid_planar)
+points(covid_planar, pch=19)
+points(covid_planar,pch=19, col="red")
