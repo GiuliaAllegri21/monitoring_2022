@@ -1,0 +1,22 @@
+# MULTIVARIATE ANALYSIS 
+
+# how to deal with the space? 
+# we have to imagine to have a certain area and we go on the field. --> on the specific plots !
+# in Situ-Data collection --> number of observations of different species, in each plot 
+# The obervation can be ploted together to see if they have an interaction inside the site of study --> and thid is a Multivariate Analysis
+  # we have no possibility to see the third dimension and we can reduce in 2 dimension the 3rd one. 
+ 
+ Dimensionality ? 
+ 
+ Principal Component --> summarize the information content in large data tables,
+ by means of a smaller set of “summary indices” that can be more easily visualized and analyzed.
+ 
+ WE WILL CODE IN R NOW!
+ 
+ We have 4 different Biomes
+ - Tropical Forest
+ - Broadleaf Forest
+ - Coniferous Forest 
+ - Artic Tundra
+ 
+ 
