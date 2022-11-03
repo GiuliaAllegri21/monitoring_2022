@@ -1,0 +1,32 @@
+  # install.packages("vegan")
+  library(vegan)
+  
+  setwd("/Users/Zuli/Desktop/lab22/")
+# download from virtuale the datasets ("Biomes multivariate datasets")
+# to upload our project we use the following function using quotes cus are outside R 
+
+load("biomes_multivar.RData")
+ # sing "ls" function (we can se the tiles of our datasets, our list)
+
+ls()
+
+head(biomes)
+
+# decorana --> it is able to take variables with different ranges and we have to name it --> "multivar", due to the fact that we are doing a multivariate analysis 
+
+multivar <- decorana(biomes)
+multivar 
+
+# it explains the interactions of the analysis that we have. 
+# we want to plot these multivariate datasets and analysis that we have simplified, obtained by the function "decorana"
+
+plot(multivar)
+
+using "ordiellipse" we can create ellipses for understanding the dimensions inside our multivar.datasets,analysis
+
+ordiellipse(multivar, type, col=c("black","red","green","blue"), kind = "ehull", lwd=3)
+ordispider(multiva, type, col=c("black", "red", "green", "blue"), label=T) 
+
+# ultima funzione posso vedere quale tipo di bioma rappresenta ogni ellisse
+
+
