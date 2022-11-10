@@ -1,0 +1,21 @@
+# Let's plot for remote sensing in R 
+# We were talking about colors and waves lenghts. 
+# The "colors" that are we seeing is not what we directly see but what the surface reflects 
+# There are many wavelenghts that we cannot see, which are the near infrared, x-ray, microwave, radiowave (which are dangerous)
+# We use images from the satelite "Landsat", a projects started in 1972 which can provide extremely good satelite images of the ground 
+
+# Import our downloaded data from lab22
+# starting with remote sensing 
+
+# brick used for importing all the layers o our datasets one obove the other in pixels 
+
+p224r63_2011 <- brick("p224r63_2011_masked.grd")
+p224r63_2011
+plot(p224r63_2011)
+
+cl <- colorRampPalette(c("dark blue", "blue", "light blue"))(100)
+plot(p224r63_2011, col=cl)
+
+# if the images doesn't pup after plotting, just write "dev.off()" for restarting all
+
+
