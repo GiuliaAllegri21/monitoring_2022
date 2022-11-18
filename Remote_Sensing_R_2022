@@ -1,0 +1,79 @@
+# Let's plot for remote sensing in R 
+# We were talking about colors and waves lenghts. 
+# The "colors" that are we seeing is not what we directly see but what the surface reflects 
+# There are many wavelenghts that we cannot see, which are the near infrared, x-ray, microwave, radiowave (which are dangerous)
+# We use images from the satelite "Landsat", a projects started in 1972 which can provide extremely good satelite images of the ground 
+
+# Import our downloaded data from lab22
+# starting with remote sensing 
+
+# brick used for importing all the layers o our datasets one obove the other in pixels 
+
+p224r63_2011 <- brick("p224r63_2011_masked.grd")
+p224r63_2011
+plot(p224r63_2011)
+
+cl <- colorRampPalette(c("dark blue", "blue", "light blue"))(100)
+plot(p224r63_2011, col=cl)
+
+# if the images doesn't pup after plotting, just write "dev.off()" for restarting all
+
+# plotting 4 different images with characteristics that we want in MULTIFRAME (same page) using-->  (par(mfrow=c(2,2)
+
+par(mfrow=c(2,2))
+clb <- colorRampPalette(c('dark blue','blue','light blue'))(100) # 
+plot(p224r63_2011,[[1]], col=clb)
+
+clg <- colorRampPalette(c('dark green','green','light green'))(100) # 
+plot( p224r63_2011,[[2]], col=clg)
+
+clr <- colorRampPalette(c('dark red','red','pink'))(100) # 
+plot(p224r63_2011,[[3]], col=clr)
+
+# Exercise: plot the final band, namely the NIR, band number 4
+# darkorange, ywllo, coral
+
+clcor <- colorRampPalette(c('Daekorange','yellow','coral'))(100) # 
+plot(p224r63_2011,[[4]], col=clcor)
+
+# we are going to have bands all together as a layer of images --> called MULTILAYER IMAGES
+
+# first of all --> using image with NATURAL COLORS  
+# "RGB" COLOR SCHEME IN R 
+
+
+# multilayer colours --> RGB (red, green, blue)
+# additional we sould insert "stretch" argument which is necessary for seeing better our layers, in our case is "Lin". It depends on what we are going to plot
+
+# dev.off()
+plotRGB(p224r63_2011, r=3, g=2, b=1, stretch="Lin") --> only with this is difficult to see differents btw water and ground 
+
+plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin")
+
+plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="Lin")
+
+plotRGB(p224r63_2011, r=3, g=2, b=4, stretch="Lin")
+
+# we have a light reflection which gives us the perception of "colors", but is what the object is 
+reflecting and not absorbing. S o using different bands for one to another we can see all the differencies in our satelite image
+# Near Infrared is reflected by almost everything. And area with no vegetation doesn't refelct anything at all
+
+# EXCERCISE plot the previous in same manner in a single multiframe
+
+
+# in satelite analysis everytime we see theresholds, there was or is --> human actions!
+
+# STRECH argument, is used for streching the original data in a new linear stretched  way  "Lin"
+# HIST is another typpe of stretching --> for stretching a lot our color.
+# EXAMPLE
+
+par(mfrow=c(2,1)) # one above the other
+
+plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin")
+plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Hist")
+
+
+
+
+
+
