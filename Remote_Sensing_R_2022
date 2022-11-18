@@ -54,6 +54,8 @@ plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="Lin")
 
 plotRGB(p224r63_2011, r=3, g=2, b=4, stretch="Lin")
 
+(# number 4 represent the near infrared)
+
 # we have a light reflection which gives us the perception of "colors", but is what the object is 
 reflecting and not absorbing. S o using different bands for one to another we can see all the differencies in our satelite image
 # Near Infrared is reflected by almost everything. And area with no vegetation doesn't refelct anything at all
@@ -73,7 +75,63 @@ plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin")
 plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Hist")
 
 
+#  Past and Present image's correlations 
+
+# normally we use the .grd imageswhich are "grid" and they are recognize by R as images
+
+# 1988
+p224r63_1988 <- brick("p224r63_1988_masked.grd")
+p224r63_1988
+plot(p224r63_1988)
+
+# 2011
+p224r63_2011 <- brick("p224r63_2011_masked.grd")
+p224r63_2011
+plot(p224r63_2011)
+
+# using RGB for comparison of 1988
+
+plotRGB(p224r63_1988, r=3, g=2, b=1, stretch="Lin")
+plotRGB(p224r63_1988, r=4, g=3, b=2, stretch="Lin")
+plotRGB(p224r63_1988, r=3, g=4, b=2, stretch="Lin")
+
+# exercise 
+# make a multiframe with 2 raws and 1 column putting 
+# plotting the 1988 and the 2011 images
+
+par(mfrow=c(2,1))
+plotRGB(p224r63_1988, r=3, g=4, b=2, stretch="Lin")
+plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="Lin")
+
+# multitemporal analysis at ecosystem level
+# calculating the difference between images
+
+difnir <- p224r63_1988[[4]] - p224r63_2011[[4]]
+
+cl <- colorRampPalette(c("green", "orange", "black"))(100)
+plot(difnir, col=cl)
+
+### DIFFERENCE IN THE BEGETATION INDEX #####
+# calculating the DVI of 2011 (between NIR and RED)
+
+dvi2011 <- p224r63_2011[[4]] - p224r63_2011[[3]]
+plot(dvi2011)
+
+# here we can see how much healty is our vegetation 
+
+# 1988 dvi 
+
+dvi1988 <- p224r63_1988[[4]] - p224r63_1988[[3]]
+plot(dvi1988)
+
+### differences between the 2 dvi ###
 
 
+diffdvi <- dvi1988 - dvi2011
+plot(diffdvi)
 
+cl <- colorRampPalette(c("blue", "white", "red"))(100)
+plot(diffdvi, col=cl)
 
+# we can see if the number is higher and the red value is more present in the image, there is a problem in the vegetation absorbtion or health
+# Another problem may be that there are roads, land patches etc.
