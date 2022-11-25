@@ -136,3 +136,48 @@ p1 <- ggplot(percentages, aes(x=cover, y=percent_1992, color=cover)) + geom_bar(
 p2 <- ggplot(percentages, aes(x=cover, y=percent_2006, color=cover)) + geom_bar(stat="identity", fill="white")
 
 grid.arrange(p1, p2, nrow=1)
+
+
+# 25.11 ggplot2
+
+ggplot()+
+geom_raster(dvi1992, mapping=aes(x=x,y=y, fill=layer))
+# everyone can see these colors --> viridis package for colorblind people
+
+
+# 2. ggplot for single layers
+ggplot()+
+geom_raster(dvi1992, mapping=aes(x=x,y=y, fill=layer))+
+scale_fill_viridis(option="viridis")
+
+# magma another palette for colorblind people 
+
+ggplot()+
+geom_raster(dvi1992, mapping=aes(x=x,y=y, fill=layer))+
+scale_fill_viridis(option="magma")
+
+# exercise: with the patchwork package
+# put 2 different graphs one beside the other
+# with 2 different viridis color ramps 
+
+par(mfrow=c(2,2))
+p1<- ggplot()+
+geom_raster(dvi1992, mapping=aes(x=x,y=y, fill=layer))+
+scale_fill_viridis(option="cividis")
+p2<- ggplot()+
+geom_raster(dvi2006, mapping=aes(x=x,y=y, fill=layer))+
+scale_fill_viridis(option="magma")
+p1+p2
+
+# for inserting a TITLE  use= "ggtitle"
+par(mfrow=c(2,2))
+p1<- ggplot()+
+geom_raster(dvi1992, mapping=aes(x=x,y=y, fill=layer))+
+scale_fill_viridis(option="cividis")+
+ggtitle("Multispectral cividis")
+
+p2<- ggplot()+
+geom_raster(dvi2006, mapping=aes(x=x,y=y, fill=layer))+
+scale_fill_viridis(option="magma")+
+ggtitle("Multispectral magma")
+p1+p2
