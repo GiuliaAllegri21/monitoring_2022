@@ -1,0 +1,119 @@
+# SDM package at work!
+
+
+library(sdm)
+library(raster)
+library(rgdal)
+
+system.file("external/species.shp", packages="sdm") --> shp: shape file (point, lines, polygones)
+file --> it gives us the path to the data 
+
+
+file <- system.file("external/species.shp", package="sdm") 
+species <- shapefile(file)
+
+# these data are from Spain!
+
+# shapefile() --> it reads a shape file, which is ready to be used. 
+# looking at the set
+species
+
+plot(species)
+# to see the graphical distribution 
+
+# lets see the occurrence
+species$occurernce
+
+# we take the data in which we have only "1" so: only the presence!
+# in sql the equal is made by 2 = : ==. For stop the selection we should use the comma ","-> we are selecting only the presences
+
+presence<- species[species$Occurrence == 1,]
+species$occurrence
+presence
+
+plot(presence) --> the point of only presence of the species!
+
+#EXCERCISE : select the absences 
+
+species[species$Occurrence == 0,]
+absence <- pecies[species$Occurrence == 0,]
+absence 
+
+plot(absence)
+
+# lets plot all together with colors
+
+plot(presence, col="blue", pch=16)
+plot(absence, col="red", pch=17)
+
+# together with absences! Not using the "plot function", we have to use "points" function
+# run in this manner
+
+plot(presence, col="blue", pch=16)
+points(absence, col="red", pch=17)
+
+# we can create a SDM with all the environmental condition that we want to see how dows the distribution change with the change of env.
+
+# predictors: look at the path , they are characterized by the extension ".asc"
+path <- system.file("external", package="sdm") 
+
+# list the predictors
+
+lst <- list.files(path=path,pattern='asc$',full.names = T) 
+lst
+# they are the list of the 4 files that we have in the external folder
+
+# stack function named "preds" like predictors
+preds <- stack(lst)
+plot(preds)
+
+
+# plot predictors and occurrences
+
+plot(preds$elevation, col=cl)
+points(species[species$Occurrence == 1,], pch=19, col="green")
+
+plot(preds$vegetation, col=cl)
+points(species[species$Occurrence == 1,], pch=19)
+
+plot(preds$temperature, col=cl)
+points(species[species$Occurrence == 1,], pch=19)
+
+plot(preds$precipitation, col=cl)
+points(species[species$Occurrence == 1,], pch=19)
+
+plot(preds$vegetation, col=cl)
+points(species[species$Occurrence == 1,], pch=19)
+
+# all the data together set the data for sdm 
+# training species are the objects
+
+datasdm <- sdmData(train=species, predictors=preds)
+datasdm 
+
+# we are going to create a MODEL, logistic model for all the predictors all together in 4 dimensions
+# ocurrence Y and env condition is X
+# GLM : generalized linear model 
+
+m1 <- sdm(Occurrence ~ elevation + precipitation + temperature + vegetation, data=datasdm, methods = "glm")
+m1
+
+# make the raster output layer, to predict the spread of socies based on our model and our dataset. arguments: newdata. 
+
+p1 <- predict(m1, newdata=preds) 
+p1
+
+# plot the output, so the final prediction. With all the stack
+
+plot(p1, col=cl)
+points(species[species$Occurrence == 1,], pch=19)
+
+# add to the stack
+finalstack <- stack(preds,p1)
+plot(finalstack)
+
+# the last image in the plot(finalstack) represents the distribution of the interested species in the areal studied with all the variables in the same image 
+
+
+
+
