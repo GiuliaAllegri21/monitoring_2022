@@ -1,14 +1,21 @@
-# Hello ! this is my exam project of 2023, I hope you'll enjoy it. 
+# Hello ! This is my exam project of 2023, I hope you'll enjoy it. 
 # First I created with overleaf the presentation, but now let's get into it with R project!
 
 # Vegetation cover before and after Vaia storm in the Northern-East of Italy.
 # lets open thel libraries and connections with the working directory. 
+# for this project I needed to use Sentinel2 so I had to install two new packages.
+
+install.packages("stars")
+install.pakcages("terra")
 
 setwd("Users/Zuli/Desktop/exam23")
 library(ncdf4) # to read and manage nc files from Copernicus
 library(raster) # to manage raster file (single layer files)
 library(ggplot2) # plotting package to better represent data with graphs 
 library(viridis) # colorblind friendly palettes 
+library(terra)
+library(stars)
+  
 # Thanks to this palette, also the colorblind people are able to see without discrimination all the graphical results. 
 
 library(patchwork) # for building multiframe 
