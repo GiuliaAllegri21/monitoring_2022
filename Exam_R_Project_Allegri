@@ -12,10 +12,11 @@ library(RStoolbox) #colorblind friendly colors palettes
 library(ncdf4) #for comparing separate ggplots, creating a multi frame 
 library(viridis) #for grid.arrange plotting, for multiframe as well
 library(patchwork) # to access to projection/transformation
+library(RColorBrewer) # for more palettes 
 
-## FCOVER after Vaia disaster### 
-## importing Images of Vegetation from Copernicus##
-## images have a resolution of 300m per 300m pixel###
+## Importing Images of Vegetation from Copernicus for years of interest 207-2018-2019-2021##
+## Images have a resolution of 300m per 300m pixel###
+# I#mporting images one by one ##
 
 
 FCOVER2017<- raster("c_gls_FCOVER300_201712100000_GLOBE_PROBAV_V1.0.1.nc")
