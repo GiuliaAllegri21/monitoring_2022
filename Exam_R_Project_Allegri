@@ -23,7 +23,7 @@ FCOVER2017<- raster("c_gls_FCOVER300_201712100000_GLOBE_PROBAV_V1.0.1.nc")
 FCOVER2017
 plot(FCOVER2017)
 
-FCOVER2018<-raster("c_gls_FCOVER300_201811300000_GLOBE_PROBAV_V1.0.1.nc")
+FCOVER2018<-raster("c_gls_FCOVER300_201801100000_GLOBE_PROBAV_V1.0.1.nc")
 FCOVER2018
 plot(FCOVER2018)
 
@@ -58,7 +58,7 @@ plot(FVEG2021)
 dev.off()
 
 # we have a really useful function to use with which we can import multiple data with the same pattern, using lapply function 
-rlist <- list.files(pattern = "FCOVER")
+rlist <- list.files(pattern = "c_gls_FCOVER")
 
 # creating a raster list and creating a raster for both images 
 list_rast <- lapply(rlist, raster)
@@ -102,7 +102,6 @@ g2<- ggplot() + geom_raster(FCOVER2018_df, mapping = aes(x=x, y=y, fill=Fraction
 g3 <- ggplot() + geom_raster(FCOVER2019_df, mapping = aes(x=x, y=y, fill=Fraction.of.green.Vegetation.Cover.333m.3)) + scale_fill_viridis(option = "viridis") + ggtitle("Vegetation cover 2019") + labs(fill = "FCOVER")
 g4 <- ggplot() + geom_raster(FCOVER2021_df, mapping = aes(x=x, y=y, fill=Fraction.of.green.Vegetation.Cover.333m.4)) + scale_fill_viridis(option = "viridis") + ggtitle("Vegetation cover 2021") + labs(fill = "FCOVER")
 
-
 # Plot them together (multiframe ggplot) using grid.arrange function in 3 raws
 grid.arrange(g1, g2, g3, g4, nrow=2)
 
@@ -114,10 +113,10 @@ dev.off()
 # Plot FCOVER of each year
 png("fcover.png", res = 300, width = 3000, heigh = 2000)
 par(mfrow=c(2,2))
-plot(FCOVER2017, main="Forest Cover 2017", col=cl1)
-plot(FCOVER2018, main="Forest Cover 2018", col=cl1)
-plot(FCOVER2019, main="Forest Cover 2019", col=cl1)
-plot(FCOVER2021, main="Forest Cover 20212",col=cl1)
+plot(FCOVER2017, main="Forest Cover 2017")
+plot(FCOVER2018, main="Forest Cover 2018")
+plot(FCOVER2019, main="Forest Cover 2019")
+plot(FCOVER2021, main="Forest Cover 20212")
 
 # Lets make a comparison between years with a linear regression model (scatterplot): 
 par(mfrow=c(1,3))
@@ -158,7 +157,7 @@ dev.off()
 # or use pairs plot
 pairs(FCOVERcrop)
 
-# lets understand if there re differences between the years of interest
+# 
 dif <- FCOVER2017 - FCOVER2021
 
 #using different palettes for the difference between the years 
@@ -166,7 +165,7 @@ cl1 <- colorRampPalette(colors = c('#ca0020','#f7f7f7','#008837'))(100)
 plot(dif, col=cl1, main = "Difference vegetation Cover between 2017 and 2018")
 
 cl2 <- colorRampPalette(colors = c('#ca0020','#f4a582','#636363','#a6dba0','#008837'))(100)
-plot(dif, col=cl3, main = "Difference in Fraction of vegetation Cover between 2017 and 2019")
+plot(dif, col=cl2, main = "Difference in Fraction of vegetation Cover between 2017 and 2019")
 
 cl3 <- colorRampPalette(colors = c('darkblue','yelloW','red','black'))(100)
 plot(dif, col=cl3, main = "Difference in Fraction of vegetation Cover between 2018 and 2021")
@@ -184,4 +183,11 @@ plot(dif, col=cl1, main = "Difference in vegetation cover between 2017 and 2018"
 plot(dif, col=cl2, main = "Difference in vegetation cover between 2017 and 2019")
 plot(dif, col=cl3, main = "Difference in vegetation Cover between 2017 and 2021")
 dev.off()
+
+## Download data from Copernicus on Leaf Area Index (300m V1) for that area#
+## I would like to see if from 2017 and 2018 there is a net difference between LAI after the storm event##
+## Lets import data as before but with LAI files## 
+
+
+
 
