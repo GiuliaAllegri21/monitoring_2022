@@ -1,55 +1,53 @@
-# Hello ! This is my exam project of 2023, I hope you'll enjoy it. 
-# First I created with overleaf the presentation, but now let's get into it with R project!
-# exam2023 monitoring
+# Hello world! this is my february exam2023 of Monitoring Ecosystem Changes and Functioning by prof. Duccio Rocchini##
+#### Here I try to analyze the possible changes in vegetation cover of an area in Trentino-Veneto during these last 4 years
+# with the advent of the beetle "Ips typographus", the bark beetle ### 
 
-#### AIM: analyze the vegetation cover of Vaia area in Trentino Alto-Adige/Veneto after the big storm in autumn 2018, the are was too small for the copernicus data, selecting a more vase one we can understand better now how the landscapes changed through after that extreme event###
 setwd("/Users/Zuli/Desktop/exam23/")
 
 library(raster) ## for formatting files-to manage spatial .nc data from Copernicus 
 library(ggplot2) # work with raster file (single layer data)
 library(gridExtra) # to ggplot raster layers, for plots and create graphics
 library(RStoolbox) #colorblind friendly colors palettes 
-library(ncdf4) #for comparing separate ggplots, creating a multi frame 
+library(ncdf4) #for comparing separate ggplots, creating a multiframe 
 library(viridis) #for grid.arrange plotting, for multiframe as well
 library(patchwork) # to access to projection/transformation
 library(RColorBrewer) # for more palettes 
 
-## Importing Images of Vegetation from Copernicus for years of interest 207-2018-2019-2021##
+## FCOVER after the return of bark beetle ##
+## Importing Images of Vegetation from Copernicus for years of interest 2019-2020-2021-2022##
 ## Images have a resolution of 300m per 300m pixel###
-# I#mporting images one by one ##
-
-
-FCOVER2017<- raster("c_gls_FCOVER300_201712100000_GLOBE_PROBAV_V1.0.1.nc")
-FCOVER2017
-plot(FCOVER2017)
-
-FCOVER2018<-raster("c_gls_FCOVER300_201801100000_GLOBE_PROBAV_V1.0.1.nc")
-FCOVER2018
-plot(FCOVER2018)
-
+## Importing images one by one #
 FCOVER2019<- raster("c_gls_FCOVER300_201905100000_GLOBE_PROBAV_V1.0.1.nc")
 FCOVER2019
 plot(FCOVER2019)
+
+FCOVER2020<-raster("c_gls_FCOVER300-RT2_202008200000_GLOBE_OLCI_V1.1.1.nc")
+FCOVER2020
+plot(FCOVER2020)
 
 FCOVER2021<- raster("c_gls_FCOVER300-RT6_202105310000_GLOBE_OLCI_V1.1.2.nc")
 FCOVER2021
 plot(FCOVER2021)
 
-ext <- c(9.58, 12.98, 45.43, 48.09)
-FVEG2017 <- crop(FCOVER2017, ext)
-plot(FVEG2017)
-
-ext <- c(9.58, 12.98, 45.43, 48.09)
-FVEG2018 <- crop(FCOVER2018, ext)
-plot(FVEG2018)
+FCOVER2022<- raster("c_gls_FCOVER300-RT1_202208200000_GLOBE_OLCI_V1.1.2.nc")
+FCOVER2022
+plot(FCOVER2022)
 
 ext <- c(9.58, 12.98, 45.43, 48.09)
 FVEG2019 <- crop(FCOVER2019, ext)
 plot(FVEG2019)
 
 ext <- c(9.58, 12.98, 45.43, 48.09)
+FVEG2020 <- crop(FCOVER2020, ext)
+plot(FVEG2020)
+
+ext <- c(9.58, 12.98, 45.43, 48.09)
 FVEG2021 <- crop(FCOVER2021, ext)
 plot(FVEG2021)
+
+ext <- c(9.58, 12.98, 45.43, 48.09)
+FVEG2022 <- crop(FCOVER2022, ext)
+plot(FVEG2022)
 
 # example of saving the file in PNG format in the output folder
 
@@ -59,13 +57,14 @@ dev.off()
 
 # we have a really useful function to use with which we can import multiple data with the same pattern, using lapply function 
 rlist <- list.files(pattern = "c_gls_FCOVER")
+rlist
 
 # creating a raster list and creating a raster for both images 
 list_rast <- lapply(rlist, raster)
 list_rast
 
 # saving the image in my working directory as png file
-png(file="/Users/Zuli/Desktop/exam23/FVEG2019_spring.png", units="cm", width=25, height=20, res=600)
+png(file="/Users/Zuli/Desktop/exam23/FVEG2019.png", units="cm", width=25, height=20, res=600)
 plot(FVEG2019)
 dev.off()
 
@@ -84,23 +83,24 @@ names(FCOVERstack)<- c("Fraction.of.green.Vegetation.Cover.333m.1", "Fraction.of
 
 # Separate files, assigning to each element of the crop a name
 
-FCOVER2017 <- FCOVERcrop$Fraction.of.green.Vegetation.Cover.333m.1
-FCOVER2018<- FCOVERcrop$Fraction.of.green.Vegetation.Cover.333m.2
-FCOVER2019<- FCOVERcrop$Fraction.of.green.Vegetation.Cover.333m.3
-FCOVER2021<- FCOVERcrop$Fraction.of.green.Vegetation.Cover.333m.4
+FCOVER2019 <- FCOVERcrop$Fraction.of.green.Vegetation.Cover.333m.1
+FCOVER2020<- FCOVERcrop$Fraction.of.green.Vegetation.Cover.333m.2
+FCOVER2021<- FCOVERcrop$Fraction.of.green.Vegetation.Cover.333m.3
+FCOVER2022<- FCOVERcrop$Fraction.of.green.Vegetation.Cover.333m.4
 
-FCOVER2017_df<- as.data.frame(FCOVER2017, xy=TRUE)
-FCOVER2018_df<- as.data.frame(FCOVER2018, xy=TRUE)
 FCOVER2019_df<- as.data.frame(FCOVER2019, xy=TRUE)
+FCOVER2020_df<- as.data.frame(FCOVER2020, xy=TRUE)
 FCOVER2021_df<- as.data.frame(FCOVER2021, xy=TRUE)
+FCOVER2022_df<- as.data.frame(FCOVER2022, xy=TRUE)
 
 
-# Converting raster into data frames with the package ggplot
+# Converting raster into data frames with the package ggplot, I used "plasma" instead of "viridis" color in viridis package
 par(mfrow=c(2,2))
-g1 <- ggplot() + geom_raster(FCOVER2017_df, mapping = aes(x=x, y=y, fill=Fraction.of.green.Vegetation.Cover.333m.1)) + scale_fill_viridis(option = "viridis") + ggtitle("Vegetation cover 2017") + labs(fill = "FCOVER")
-g2<- ggplot() + geom_raster(FCOVER2018_df, mapping = aes(x=x, y=y, fill=Fraction.of.green.Vegetation.Cover.333m.2)) + scale_fill_viridis(option = "viridis") + ggtitle("Vegetation cover 2018") + labs(fill = "FCOVER")
-g3 <- ggplot() + geom_raster(FCOVER2019_df, mapping = aes(x=x, y=y, fill=Fraction.of.green.Vegetation.Cover.333m.3)) + scale_fill_viridis(option = "viridis") + ggtitle("Vegetation cover 2019") + labs(fill = "FCOVER")
-g4 <- ggplot() + geom_raster(FCOVER2021_df, mapping = aes(x=x, y=y, fill=Fraction.of.green.Vegetation.Cover.333m.4)) + scale_fill_viridis(option = "viridis") + ggtitle("Vegetation cover 2021") + labs(fill = "FCOVER")
+g1 <- ggplot() + geom_raster(FCOVER2019_df, mapping = aes(x=x, y=y, fill=Fraction.of.green.Vegetation.Cover.333m.1)) + scale_fill_viridis(option = "plasma") + ggtitle("Vegetation cover 2019") + labs(fill = "FCOVER")
+g2 <- ggplot() + geom_raster(FCOVER2020_df, mapping = aes(x=x, y=y, fill=Fraction.of.green.Vegetation.Cover.333m.2)) + scale_fill_viridis(option = "plasma") + ggtitle("Vegetation cover 2020") + labs(fill = "FCOVER")
+g3 <- ggplot() + geom_raster(FCOVER2021_df, mapping = aes(x=x, y=y, fill=Fraction.of.green.Vegetation.Cover.333m.3)) + scale_fill_viridis(option = "plasma") + ggtitle("Vegetation cover 2021") + labs(fill = "FCOVER")
+g4 <- ggplot() + geom_raster(FCOVER2022_df, mapping = aes(x=x, y=y, fill=Fraction.of.green.Vegetation.Cover.333m.4)) + scale_fill_viridis(option = "plasma") + ggtitle("Vegetation cover 2022") + labs(fill = "FCOVER")
+
 
 # Plot them together (multiframe ggplot) using grid.arrange function in 3 raws
 grid.arrange(g1, g2, g3, g4, nrow=2)
@@ -113,81 +113,183 @@ dev.off()
 # Plot FCOVER of each year
 png("fcover.png", res = 300, width = 3000, heigh = 2000)
 par(mfrow=c(2,2))
-plot(FCOVER2017, main="Forest Cover 2017")
-plot(FCOVER2018, main="Forest Cover 2018")
 plot(FCOVER2019, main="Forest Cover 2019")
-plot(FCOVER2021, main="Forest Cover 20212")
+plot(FCOVER2020, main="Forest Cover 2020")
+plot(FCOVER2021, main="Forest Cover 20121")
+plot(FCOVER2022, main="Forest Cover 2022")
 
 # Lets make a comparison between years with a linear regression model (scatterplot): 
 par(mfrow=c(1,3))
-plot(FCOVER2017, FCOVER2018, xlim=c(0, 1), ylim=c(0, 1), xlab="FCOVER 2017", ylab="FCOVER 2018")
+plot(FCOVER2019, FCOVER2020, xlim=c(0, 1), ylim=c(0, 1), xlab="FCOVER 2019", ylab="FCOVER 2020")
 abline(0,1, col="red")
-plot(FCOVER2017, FCOVER2019, xlim=c(0, 1), ylim=c(0, 1), xlab="FCOVER 2017", ylab="FCOVER 2019")
+plot(FCOVER2019, FCOVER2021, xlim=c(0, 1), ylim=c(0, 1), xlab="FCOVER 2019", ylab="FCOVER 2021")
 abline(0,1, col="red")
-plot(FCOVER2017, FCOVER2021, xlim=c(0, 1), ylim=c(0, 1), xlab="FCOVER 2017", ylab="FCOVER 2021")
+plot(FCOVER2019, FCOVER2022, xlim=c(0, 1), ylim=c(0, 1), xlab="FCOVER 2019", ylab="FCOVER 2022")
 abline(0,1, col="red")
 
 
 # export them
 png("ablineFCOVER.png", res = 300, width = 3000, heigh = 2000)
-par(mfrow=c(3,1))
-plot(FCOVER2017, FCOVER2018, xlim=c(0, 1), ylim=c(0, 1), xlab="FCOVER 2017", ylab="FCOVER 2018")
+par(mfrow=c(1,3))
+plot(FCOVER2019, FCOVER2020, xlim=c(0, 1), ylim=c(0, 1), xlab="FCOVER 2019", ylab="FCOVER 2020")
 abline(0,1, col="red")
-plot(FCOVER2017, FCOVER2019, xlim=c(0, 1), ylim=c(0, 1), xlab="FCOVER 2017", ylab="FCOVER 2019")
+plot(FCOVER2019, FCOVER2021, xlim=c(0, 1), ylim=c(0, 1), xlab="FCOVER 2019", ylab="FCOVER 2021")
 abline(0,1, col="red")
-plot(FCOVER2017, FCOVER2021, xlim=c(0, 1), ylim=c(0, 1), xlab="FCOVER 2017", ylab="FCOVER 2021")
+plot(FCOVER2019, FCOVER2022, xlim=c(0, 1), ylim=c(0, 1), xlab="FCOVER 2019", ylab="FCOVER 2022")
 abline(0,1, col="red")
 dev.off()
 
 #lets do a histogram 
 par(mfrow=c(1,3))
-hist(FCOVER2017)
-hist(FCOVER2018)
 hist(FCOVER2019)
+hist(FCOVER2020)
 hist(FCOVER2021)
+hist(FCOVER2022)
 
 # export
 png("histFCOVER.png", res = 300, width = 3000, heigh = 2000)
 par(mfrow=c(2,2))
-hist(FCOVER2017)
-hist(FCOVER2018)
 hist(FCOVER2019)
+hist(FCOVER2020)
 hist(FCOVER2021)
+hist(FCOVER2022)
 dev.off()
+
+
 # or use pairs plot
 pairs(FCOVERcrop)
 
-# 
-dif <- FCOVER2017 - FCOVER2021
+
+#Plot the difference between 2019 and 2022 cover for analyzing if there is any change
+
+dif <- FCOVER2019 - FCOVER2022
 
 #using different palettes for the difference between the years 
 cl1 <- colorRampPalette(colors = c('#ca0020','#f7f7f7','#008837'))(100) 
-plot(dif, col=cl1, main = "Difference vegetation Cover between 2017 and 2018")
+plot(dif, col=cl1, main = "Difference vegetation Cover between 2019 and 2022")
 
 cl2 <- colorRampPalette(colors = c('#ca0020','#f4a582','#636363','#a6dba0','#008837'))(100)
-plot(dif, col=cl2, main = "Difference in Fraction of vegetation Cover between 2017 and 2019")
+plot(dif, col=cl2, main = "Difference in Fraction of vegetation Cover between 2019 and 2022")
 
 cl3 <- colorRampPalette(colors = c('darkblue','yelloW','red','black'))(100)
-plot(dif, col=cl3, main = "Difference in Fraction of vegetation Cover between 2018 and 2021")
+plot(dif, col=cl3, main = "Difference in Fraction of vegetation Cover between 2019 and 2022")
+
 
 # lets plot them together
 par(mfrow=c(2,2))
-plot(dif, col=cl1, main = "Difference in Fraction of vegetation Cover between 2017 and 2018")
-plot(dif, col=cl2, main = "Difference in Fraction of vegetation Cover between 2017 and 2019")
-plot(dif, col=cl3, main = "Difference in Fraction of vegetation Cover between 2017 and 2021")
-
+plot(dif, col=cl1, main = "Difference in Fraction of vegetation Cover between 2019 and 2022")
+plot(dif, col=cl2, main = "Difference in Fraction of vegetation Cover between 2019 and 2022")
+plot(dif, col=cl3, main = "Difference in Fraction of vegetation Cover between 2019 and 2022")
 # Exporting them as image in the working directory 
 png("fcoverdif.png", res = 300, width = 4500, heigh = 4500)
 par(mfrow=c(2,2))
-plot(dif, col=cl1, main = "Difference in vegetation cover between 2017 and 2018")
-plot(dif, col=cl2, main = "Difference in vegetation cover between 2017 and 2019")
-plot(dif, col=cl3, main = "Difference in vegetation Cover between 2017 and 2021")
+plot(dif, col=cl1, main = "Difference in Fraction of vegetation Cover between 2019 and 2022")
+plot(dif, col=cl2, main = "Difference in Fraction of vegetation Cover between 2019 and 2022")
+plot(dif, col=cl3, main = "Difference in Fraction of vegetation Cover between 2019 and 2022")
 dev.off()
 
 ## Download data from Copernicus on Leaf Area Index (300m V1) for that area#
-## I would like to see if from 2017 and 2018 there is a net difference between LAI after the storm event##
+## I would like to see if from 2019 to 2022 there is a net difference between LAI after the eventual presence of the beetle##
 ## Lets import data as before but with LAI files## 
 
+LAI_2019<- raster("c_gls_LAI300_201911200000_GLOBE_PROBAV_V1.0.1.nc")
+LAI_2019
+plot(LAI_2019)
+
+LAI_2020<- raster("c_gls_LAI300-RT6_202007310000_GLOBE_OLCI_V1.1.1.nc")
+LAI_2020
+plot(LAI_2020)
+
+LAI_2021<- raster("c_gls_LAI300-RT0_202108310000_GLOBE_OLCI_V1.1.2.nc")
+LAI_2021
+plot(LAI_2021)
+
+LAI_2022<- raster("c_gls_LAI300-RT2_202208200000_GLOBE_OLCI_V1.1.2.nc")
+LAI_2022
+plot(LAI_2022)
+
+ext <- c(9.58, 12.98, 45.43, 48.09)
+LAI_2019_ext <- crop(LAI_2019, ext)
+plot(LAI_2019_ext)
+
+ext <- c(9.58, 12.98, 45.43, 48.09)
+LAI_2020_ext <- crop(LAI_2020, ext)
+plot(LAI_2020_ext)
+
+ext <- c(9.58, 12.98, 45.43, 48.09)
+LAI_2021_ext <- crop(LAI_2021, ext)
+plot(LAI_2021_ext)
+
+ext <- c(9.58, 12.98, 45.43, 48.09)
+LAI_2022_ext <- crop(LAI_2022, ext)
+plot(LAI_2022_ext)
 
 
+LAIrlist <- list.files(pattern="LAI")
+LAIlist_rast <- lapply(LAIrlist, raster)
+LAIlist_rast
+LAIstack <- stack(LAIlist_rast)
+LAIstack
 
+names(LAIstack) <- c("Leaf.Area.Index.333m.1, Leaf.Area.Index.333m.2, Leaf.Area.Index.333m.3, Leaf.Area.Index.333m.4 ")
+
+# Crop over ou area of interest
+
+LAIcrop <- crop(LAIstack, ext)
+plot(LAIcrop)
+LAIcrop
+
+# Assigning to each element of the crop a name and separation phase
+
+LAI2019 <- LAIcrop$Leaf.Area.Index.333m.1
+LAI2020 <- LAIcrop$Leaf.Area.Index.333m.2
+LAI2021 <- LAIcrop$Leaf.Area.Index.333m.3
+LAI2022 <- LAIcrop$Leaf.Area.Index.333m.4
+
+# Convert raster into ggplot dataframes
+
+LAI2019_df <- as.data.frame(LAI2019, xy=TRUE) 
+LAI2020_df <- as.data.frame(LAI2020, xy=TRUE)
+LAI2021_df <- as.data.frame(LAI2021, xy=TRUE) 
+LAI2022_df <- as.data.frame(LAI2022, xy=TRUE)
+# ggplot
+p1 <- ggplot() + geom_raster(LAI2019_df, mapping = aes(x=x, y=y, fill=Leaf.Area.Index.333m.1)) + scale_fill_viridis(option = "viridis") + ggtitle("Leaf Area Index in 2019") + labs(fill = "LAI")
+p2 <- ggplot() + geom_raster(LAI2020_df, mapping = aes(x=x, y=y, fill=Leaf.Area.Index.333m.2)) + scale_fill_viridis(option = "viridis") + ggtitle("Leaf Area Index in 2020") + labs(fill = "LAI")
+p3 <- ggplot() + geom_raster(LAI2021_df, mapping = aes(x=x, y=y, fill=Leaf.Area.Index.333m.3)) + scale_fill_viridis(option = "viridis") + ggtitle("Leaf Area Index in 2021") + labs(fill = "LAI")
+p4 <- ggplot() + geom_raster(LAI2022_df, mapping = aes(x=x, y=y, fill=Leaf.Area.Index.333m.4)) + scale_fill_viridis(option = "viridis") + ggtitle("Leaf Area Index in 2022") + labs(fill = "LAI")
+
+p1 + p2 + p3 + p4
+
+png("LAI_ggplot.png", res = 300, width = 3000, heigh = 3000)
+grid.arrange(p1, p2, p3, p4,  nrow=2)
+dev.off()
+
+##Plot the difference between 2021 and 2022, this because I noticed errors 
+# and NA values in the 2019-2020 LAI data, and because last year was tough for timbers due to this insect## 
+
+difLAI<- LAI2021 - LAI2022
+
+# Create a new and different color palette with COLORBREWER 2.0 
+cl4 <- colorRampPalette(colors = c('#ca0020','#f4a582','#f7f7f7','#a6dba0','#008837'))(100)
+
+# Plot the difference with 3 color palettes
+par(mfrow=c(2,2))
+plot(difLAI, col=cl4, main = "Difference in LAI between 2021 and 2022")
+plot(difLAI, col=cl3, main = "Difference in LAI between 2021 and 2022")
+plot(difLAI, col=cl4, main = "Difference in LAI between 2021 and 2022")
+
+# Lets export the file
+png("difLAI.png", res = 300, width = 4000, heigh = 2500)
+par(mfrow=c(2,2))
+plot(difLAI, col=cl4, main = "Difference in LAI between 2021 and 2022")
+plot(difLAI, col=cl3, main = "Difference in LAI between 2021 and 2022")
+plot(difLAI, col=cl4, main = "Difference in LAI between 2021 and 2022")
+dev.off()
+
+# Plot scatterplots, histograms and Pearson correlation coefficient of LAI 
+pairs(LAIcrop)
+
+# Export file
+png("pairLAI.png", res = 300, width = 4000, heigh = 2000)
+pairs(LAIcrop)
+dev.off()
