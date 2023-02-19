@@ -115,7 +115,7 @@ png("fcover.png", res = 300, width = 3000, heigh = 2000)
 par(mfrow=c(2,2))
 plot(FCOVER2019, main="Forest Cover 2019")
 plot(FCOVER2020, main="Forest Cover 2020")
-plot(FCOVER2021, main="Forest Cover 20121")
+plot(FCOVER2021, main="Forest Cover 2021")
 plot(FCOVER2022, main="Forest Cover 2022")
 
 # Lets make a comparison between years with a linear regression model (scatterplot): 
@@ -156,7 +156,7 @@ hist(FCOVER2022)
 dev.off()
 
 
-# or use pairs plot
+# or use pairs plot for scatterplots, histograms : matrix of scatterplots! 
 pairs(FCOVERcrop)
 
 
@@ -208,6 +208,7 @@ LAI_2022<- raster("c_gls_LAI300-RT2_202208200000_GLOBE_OLCI_V1.1.2.nc")
 LAI_2022
 plot(LAI_2022)
 
+## Extension of interest. Coordinates in parenthesis
 ext <- c(9.58, 12.98, 45.43, 48.09)
 LAI_2019_ext <- crop(LAI_2019, ext)
 plot(LAI_2019_ext)
@@ -233,7 +234,7 @@ LAIstack
 
 names(LAIstack) <- c("Leaf.Area.Index.333m.1, Leaf.Area.Index.333m.2, Leaf.Area.Index.333m.3, Leaf.Area.Index.333m.4 ")
 
-# Crop over ou area of interest
+# Crop over our area of interest
 
 LAIcrop <- crop(LAIstack, ext)
 plot(LAIcrop)
@@ -246,7 +247,7 @@ LAI2020 <- LAIcrop$Leaf.Area.Index.333m.2
 LAI2021 <- LAIcrop$Leaf.Area.Index.333m.3
 LAI2022 <- LAIcrop$Leaf.Area.Index.333m.4
 
-# Convert raster into ggplot dataframes
+# Convert raster into ggplot dataframes for a better visualisation 
 
 LAI2019_df <- as.data.frame(LAI2019, xy=TRUE) 
 LAI2020_df <- as.data.frame(LAI2020, xy=TRUE)
