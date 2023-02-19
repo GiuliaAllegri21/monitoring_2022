@@ -274,13 +274,13 @@ difLAI<- LAI2021 - LAI2022
 cl4 <- colorRampPalette(colors = c('#ca0020','#f4a582','#f7f7f7','#a6dba0','#008837'))(100)
 
 # Plot the differences 
-par(mfrow=c(2,2))
+par(mfrow=c(1,2))
 plot(difLAI, col=cl4, main = "Difference in LAI between 2021 and 2022")
 plot(difLAI, col=cl3, main = "Difference in LAI between 2021 and 2022")
 
 # Lets export the file
 png("difLAI.png", res = 300, width = 4000, heigh = 2500)
-par(mfrow=c(2,2))
+par(mfrow=c(1,2))
 plot(difLAI, col=cl4, main = "Difference in LAI between 2021 and 2022")
 plot(difLAI, col=cl3, main = "Difference in LAI between 2021 and 2022")
 dev.off()
