@@ -141,18 +141,18 @@ dev.off()
 
 #lets do a histogram 
 par(mfrow=c(1,3))
-hist(FCOVER2019)
-hist(FCOVER2020)
-hist(FCOVER2021)
-hist(FCOVER2022)
+hist(FCOVER2019, main="Vegetation cover in 2019)
+hist(FCOVER2020, main="Vegetation cover in 2020)
+hist(FCOVER2021, main="Vegetation cover in 2021)
+hist(FCOVER2022, main="Vegetation cover in 2022)
 
 # export
 png("histFCOVER.png", res = 300, width = 3000, heigh = 2000)
 par(mfrow=c(2,2))
-hist(FCOVER2019)
-hist(FCOVER2020)
-hist(FCOVER2021)
-hist(FCOVER2022)
+hist(FCOVER2019, main="Vegetation cover in 2019)
+hist(FCOVER2020, main="Vegetation cover in 2020)
+hist(FCOVER2021, main="Vegetation cover in 2021)
+hist(FCOVER2022, main="Vegetation cover in 2022)
 dev.off()
 
 
@@ -273,18 +273,16 @@ difLAI<- LAI2021 - LAI2022
 # Create a new and different color palette with COLORBREWER 2.0 
 cl4 <- colorRampPalette(colors = c('#ca0020','#f4a582','#f7f7f7','#a6dba0','#008837'))(100)
 
-# Plot the difference with 3 color palettes
+# Plot the differences 
 par(mfrow=c(2,2))
 plot(difLAI, col=cl4, main = "Difference in LAI between 2021 and 2022")
 plot(difLAI, col=cl3, main = "Difference in LAI between 2021 and 2022")
-plot(difLAI, col=cl4, main = "Difference in LAI between 2021 and 2022")
 
 # Lets export the file
 png("difLAI.png", res = 300, width = 4000, heigh = 2500)
 par(mfrow=c(2,2))
 plot(difLAI, col=cl4, main = "Difference in LAI between 2021 and 2022")
 plot(difLAI, col=cl3, main = "Difference in LAI between 2021 and 2022")
-plot(difLAI, col=cl4, main = "Difference in LAI between 2021 and 2022")
 dev.off()
 
 # Plot scatterplots, histograms and Pearson correlation coefficient of LAI 
