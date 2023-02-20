@@ -7,11 +7,9 @@ setwd("/Users/Zuli/Desktop/exam23/")
 library(raster) ## for formatting files-to manage spatial .nc data from Copernicus 
 library(ggplot2) # work with raster file (single layer data)
 library(gridExtra) # to ggplot raster layers, for plots and create graphics
-library(RStoolbox) #colorblind friendly colors palettes 
 library(ncdf4) #for comparing separate ggplots, creating a multiframe 
 library(viridis) #for grid.arrange plotting, for multiframe as well
 library(patchwork) # to access to projection/transformation
-library(RColorBrewer) # for more palettes 
 
 ## FCOVER after the return of bark beetle ##
 ## Importing Images of Vegetation from Copernicus for years of interest 2019-2020-2021-2022##
@@ -59,7 +57,7 @@ dev.off()
 rlist <- list.files(pattern = "c_gls_FCOVER")
 rlist
 
-# creating a raster list and creating a raster for both images 
+# creating a raster list and creating a raster for all images 
 list_rast <- lapply(rlist, raster)
 list_rast
 
