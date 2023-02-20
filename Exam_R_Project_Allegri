@@ -4,10 +4,10 @@
 
 setwd("/Users/Zuli/Desktop/exam23/")
 
-library(raster) ## for formatting files-to manage spatial .nc data from Copernicus 
-library(ggplot2) # work with raster file (single layer data)
+library(raster) ## for formatting files-to manage spatial data of raster data.
+library(ggplot2) # work with raster file (single layer data) for creatiing graphical maps 
 library(gridExtra) # to ggplot raster layers, for plots and create graphics
-library(ncdf4) #for comparing separate ggplots, creating a multiframe 
+library(ncdf4) #for opening .nc data  
 library(viridis) #for grid.arrange plotting, for multiframe as well
 library(patchwork) # to access to projection/transformation
 
